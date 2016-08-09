@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mti_tab_height">48dp</dimen>
+    <dimen name="mti_timeline_height">110dp</dimen>
+
+    <dimen name="mti_lbl_padding">18dp</dimen>
+    <dimen name="mti_lbl_tab">14sp</dimen>
+    <dimen name="mti_lbl_tab_padding_top">21dp</dimen>
+
+    <dimen name="mti_lbl_day">12sp</dimen>
+    <dimen name="mti_lbl_date">14sp</dimen>
+    <dimen name="mti_lbl_value">12sp</dimen>
+</resources>

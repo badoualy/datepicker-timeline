@@ -1,6 +1,11 @@
+[![Release](https://jitpack.io/v/badoualy/datepicker-timeline.svg)](https://jitpack.io/#badoualy/datepicker-timeline)
+
+Licence
+----------------
+```
 The MIT License (MIT)
 
-Copyright (c) 2015 Yann Badoual
+Copyright (c) 2015 Yannick Badoual
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,4 +24,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
+```

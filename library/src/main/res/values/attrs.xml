@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="DatePickerTimeline" tools:ignore="ResourceName">
+        <attr name="mti_primaryColor" format="color"/>
+        <attr name="mti_primaryDarkColor" format="color"/>
+
+        <attr name="mti_tabSelectedColor" format="color"/>
+        <attr name="mti_tabBeforeSelectionColor" format="color"/>
+
+        <attr name="mti_lblDayColor" format="color"/>
+
+        <attr name="mti_lblDateColor" format="color"/>
+        <attr name="mti_lblDateSelectedColor" format="color"/>
+        <attr name="mti_bgLblDateSelectedColor" format="color"/>
+        <attr name="mti_ringLblDateSelectedColor" format="color"/>
+        <attr name="mti_bgLblTodayColor" format="color"/>
+
+        <attr name="mti_lblLabelColor" format="color"/>
+    </declare-styleable>
+</resources>

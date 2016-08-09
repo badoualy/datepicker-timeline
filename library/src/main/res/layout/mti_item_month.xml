@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="62dp"
+    android:layout_height="48dp"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/mti_lbl_padding"
+    android:paddingLeft="@dimen/mti_lbl_padding"
+    android:paddingRight="@dimen/mti_lbl_padding"
+    android:paddingStart="@dimen/mti_lbl_padding"
+    android:paddingTop="5dp">
+
+    <com.github.badoualy.datepicker.DotView
+        android:id="@+id/mti_view_indicator"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/mti_lbl_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mti_tab_height"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLength="3"
+        android:maxLines="1"
+        android:textColor="@color/mti_default_primary"
+        android:textSize="@dimen/mti_lbl_tab"
+        tools:text="February"/>
+
+</FrameLayout>

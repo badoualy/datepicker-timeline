@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/mt_layout_toolbar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="50dp"
+    android:layout_height="@dimen/mti_timeline_height"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/lbl_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLength="1"
+        android:singleLine="true"
+        android:textColor="@color/mti_lbl_day"
+        android:textSize="@dimen/mti_lbl_day"
+        tools:text="T"/>
+
+    <TextView
+        android:id="@+id/lbl_date"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/mti_bg_lbl_date_selected"
+        android:gravity="center"
+        android:maxLength="2"
+        android:singleLine="true"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/mti_lbl_date"
+        tools:text="25"/>
+
+    <TextView
+        android:id="@+id/lbl_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:maxLength="5"
+        android:singleLine="true"
+        android:textColor="@color/mti_lbl_label"
+        android:textSize="@dimen/mti_lbl_day"
+        tools:text="385"/>
+
+</LinearLayout>

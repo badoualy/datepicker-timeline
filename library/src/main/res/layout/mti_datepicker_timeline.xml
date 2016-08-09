@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.github.badoualy.datepicker.MonthView
+        android:id="@+id/mti_month_view"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <com.github.badoualy.datepicker.TimelineView
+        android:id="@+id/mti_timeline"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="#fff"
+        tools:listitem="@layout/mti_item_day"/>
+</merge>
