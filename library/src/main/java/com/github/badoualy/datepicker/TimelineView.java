@@ -29,7 +29,7 @@ class TimelineView extends RecyclerView {
     private MonthView.DateLabelAdapter dateLabelAdapter;
 
     private int selectedYear, selectedMonth, selectedDay;
-    private int selectedPosition = 0;
+    private int selectedPosition;
     private TimelineAdapter adapter;
 
     // Day letter
@@ -59,6 +59,8 @@ class TimelineView extends RecyclerView {
         selectedYear = DatePickerTimeline.startYear;
         selectedMonth = DatePickerTimeline.startMonth;
         selectedDay = DatePickerTimeline.startDay;
+        selectedPosition = 0;
+        Log.d("TimelineView", "Start values " + selectedYear + "/" + selectedMonth + "/" + selectedDay);
         setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         resetCalendar();
 
@@ -121,14 +123,24 @@ class TimelineView extends RecyclerView {
         Log.d(TAG, "setSelectedDate() called with: " + "year = [" + year + "], month = [" + month + "], day = [" + day + "]");
         // Get new selected dayOfYear
         calendar.set(year, month, day, 1, 0, 0);
+        final int newDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         final long newTimestamp = calendar.getTimeInMillis();
 
         // Get current selected dayOfYear
         calendar.set(selectedYear, selectedMonth, selectedDay, 1, 0, 0);
+        final int oldDayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
         final long oldTimestamp = calendar.getTimeInMillis();
 
-        // IMPORTANT: since we only use year/month/day, and we don't care about the time, we'll always have a good day difference
-        int dayDifference = (int) ((newTimestamp - oldTimestamp) / TimeUnit.DAYS.toMillis(1));
+        int dayDifference;
+        if (year == selectedYear) {
+            dayDifference = newDayOfYear - oldDayOfYear;
+        } else {
+            // Lazy...
+            int dayDifferenceApprox = (int) ((newTimestamp - oldTimestamp) / TimeUnit.DAYS.toMillis(1));
+            calendar.add(Calendar.DAY_OF_YEAR, dayDifferenceApprox);
+            dayDifference = dayDifferenceApprox + (newDayOfYear - calendar.get(Calendar.DAY_OF_YEAR));
+        }
+
         onDateSelected(selectedPosition + dayDifference, year, month, day);
     }
 
