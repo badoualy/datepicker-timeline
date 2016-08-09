@@ -62,7 +62,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
             // If we are in january, we'll probably want to have previous year :)
             startYear--;
         }
-        startMonth = Calendar.JANUARY;
+        startMonth = Calendar.AUGUST;
         startDay = 1;
 
         // Load default values
@@ -115,6 +115,18 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
                     onDateSelectedListener.onDateSelected(year, month, day);
             }
         });
+    }
+
+    public int getSelectedYear() {
+        return timelineView.getSelectedYear();
+    }
+
+    public int getSelectedMonth() {
+        return timelineView.getSelectedMonth();
+    }
+
+    public int getSelectedDay() {
+        return timelineView.getSelectedDay();
     }
 
     public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {

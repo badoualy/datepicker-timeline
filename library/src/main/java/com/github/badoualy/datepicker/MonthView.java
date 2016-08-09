@@ -25,7 +25,7 @@ public class MonthView extends RecyclerView {
     private int defaultColor, colorSelected, colorBeforeSelection;
 
     private int selectedYear, selectedMonth;
-    private int selectedPosition = 0;
+    private int selectedPosition = -1;
 
     public MonthView(Context context) {
         super(context);
@@ -52,8 +52,10 @@ public class MonthView extends RecyclerView {
         colorSelected = DatePickerTimeline.tabSelectedColor;
         colorBeforeSelection = DatePickerTimeline.tabBeforeSelectionColor;
 
-        for (int i = 0; i < MONTHS.length; i++)
-            MONTHS[i] = MONTHS[i].substring(0, 3).toUpperCase(Locale.US);
+        for (int i = 0; i < MONTHS.length; i++) {
+            if (MONTHS[i] != null && MONTHS[i].length() > 3)
+                MONTHS[i] = MONTHS[i].substring(0, 3).toUpperCase(Locale.US);
+        }
 
         setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -77,10 +79,13 @@ public class MonthView extends RecyclerView {
     private void onMonthSelected(int year, int month, boolean callListener) {
         int oldPosition = selectedPosition;
         selectedPosition = getPositionForDate(year, month);
-        if (selectedPosition == oldPosition)
-            return;
         selectedYear = year;
         selectedMonth = month;
+
+        if (selectedPosition == oldPosition) {
+            centerOnPosition(selectedPosition);
+            return;
+        }
 
         if (adapter != null && layoutManager != null) {
             final int rangeStart = Math.min(oldPosition, selectedPosition);
@@ -88,8 +93,7 @@ public class MonthView extends RecyclerView {
             adapter.notifyItemRangeChanged(rangeStart, rangeEnd - rangeStart + 1);
 
             // Animate scroll
-            int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
-            layoutManager.scrollToPositionWithOffset(selectedPosition, offset);
+            centerOnPosition(selectedPosition);
 
             if (callListener && onMonthSelectedListener != null)
                 onMonthSelectedListener.onMonthSelected(year, month);
@@ -97,25 +101,28 @@ public class MonthView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    // Animate scroll
-                    int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
-                    layoutManager.scrollToPositionWithOffset(selectedPosition, offset);
+                    centerOnPosition(selectedPosition);
                 }
             });
         }
     }
 
+    private void centerOnPosition(int position) {
+        // Animate scroll
+        int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
+        layoutManager.scrollToPositionWithOffset(position, offset);
+    }
 
     private int getYearForPosition(int position) {
-        return position / 12 + DatePickerTimeline.startYear;
+        return (position + DatePickerTimeline.startMonth) / 12 + DatePickerTimeline.startYear;
     }
 
     private int getMonthForPosition(int position) {
-        return position % 12 + DatePickerTimeline.startMonth;
+        return (DatePickerTimeline.startMonth + position) % 12;
     }
 
     private int getPositionForDate(int year, int month) {
-        return 12 * (year - 2016) + month;
+        return (12 * (year - DatePickerTimeline.startYear) + month) - DatePickerTimeline.startMonth;
     }
 
     public void setOnMonthSelectedListener(OnMonthSelectedListener onMonthSelectedListener) {

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,13 @@ import android.widget.TextView;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 class TimelineView extends RecyclerView {
 
+    private static final String TAG = "TimelineView";
+
     private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getShortWeekdays();
-    private Random random = new Random(System.currentTimeMillis());
 
     private final Calendar calendar = Calendar.getInstance(Locale.getDefault());
     private LinearLayoutManager layoutManager;
@@ -78,8 +79,12 @@ class TimelineView extends RecyclerView {
     }
 
     private void onDateSelected(int position, int year, int month, int day) {
-        if (position == selectedPosition)
+        Log.d(TAG,
+              "onDateSelected() called with: " + "position = [" + position + "], year = [" + year + "], month = [" + month + "], day = [" + day + "]");
+        if (position == selectedPosition) {
+            centerOnPosition(selectedPosition);
             return;
+        }
 
         int oldPosition = selectedPosition;
         selectedPosition = position;
@@ -92,9 +97,7 @@ class TimelineView extends RecyclerView {
             adapter.notifyItemChanged(oldPosition);
             adapter.notifyItemChanged(position);
 
-            // Animate scroll
-            int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
-            layoutManager.scrollToPositionWithOffset(selectedPosition, offset);
+            centerOnPosition(selectedPosition);
 
             if (onDateSelectedListener != null)
                 onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay);
@@ -102,15 +105,20 @@ class TimelineView extends RecyclerView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    // Animate scroll
-                    int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
-                    layoutManager.scrollToPositionWithOffset(selectedPosition, offset);
+                    centerOnPosition(selectedPosition);
                 }
             });
         }
     }
 
+    private void centerOnPosition(int position) {
+        // Animate scroll
+        int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
+        layoutManager.scrollToPositionWithOffset(position, offset);
+    }
+
     public void setSelectedDate(int year, int month, int day) {
+        Log.d(TAG, "setSelectedDate() called with: " + "year = [" + year + "], month = [" + month + "], day = [" + day + "]");
         // Get new selected dayOfYear
         calendar.set(year, month, day, 1, 0, 0);
         final long newTimestamp = calendar.getTimeInMillis();
@@ -122,6 +130,18 @@ class TimelineView extends RecyclerView {
         // IMPORTANT: since we only use year/month/day, and we don't care about the time, we'll always have a good day difference
         int dayDifference = (int) ((newTimestamp - oldTimestamp) / TimeUnit.DAYS.toMillis(1));
         onDateSelected(selectedPosition + dayDifference, year, month, day);
+    }
+
+    public int getSelectedYear() {
+        return selectedYear;
+    }
+
+    public int getSelectedMonth() {
+        return selectedMonth;
+    }
+
+    public int getSelectedDay() {
+        return selectedDay;
     }
 
     public void setOnDateSelectedListener(DatePickerTimeline.OnDateSelectedListener onDateSelectedListener) {
