@@ -36,11 +36,12 @@
         android:id="@+id/lbl_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:maxLength="5"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:singleLine="true"
         android:textColor="@color/mti_lbl_label"
         android:textSize="@dimen/mti_lbl_day"
-        tools:text="385"/>
+        tools:text="+ 9999"/>
 
 </LinearLayout>

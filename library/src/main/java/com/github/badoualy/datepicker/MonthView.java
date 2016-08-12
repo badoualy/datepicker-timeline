@@ -96,7 +96,7 @@ public class MonthView extends RecyclerView {
             centerOnPosition(selectedPosition);
 
             if (callListener && onMonthSelectedListener != null)
-                onMonthSelectedListener.onMonthSelected(year, month);
+                onMonthSelectedListener.onMonthSelected(year, month, selectedPosition);
         } else {
             post(new Runnable() {
                 @Override
@@ -194,10 +194,10 @@ public class MonthView extends RecyclerView {
     }
 
     public interface OnMonthSelectedListener {
-        void onMonthSelected(int year, int month);
+        void onMonthSelected(int year, int month, int index);
     }
 
     public interface DateLabelAdapter {
-        CharSequence getLabel(int year, int month, int day);
+        CharSequence getLabel(int year, int month, int day, int index);
     }
 }

@@ -108,11 +108,11 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         monthView.setOnMonthSelectedListener(this);
         timelineView.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
-            public void onDateSelected(int year, int month, int day) {
+            public void onDateSelected(int year, int month, int day, int index) {
                 monthView.setSelectedMonth(year, month, false);
 
                 if (onDateSelectedListener != null)
-                    onDateSelectedListener.onDateSelected(year, month, day);
+                    onDateSelectedListener.onDateSelected(year, month, day, index);
             }
         });
     }
@@ -142,11 +142,11 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
     }
 
     @Override
-    public void onMonthSelected(int year, int month) {
+    public void onMonthSelected(int year, int month, int index) {
         timelineView.setSelectedDate(year, month, 1);
     }
 
     public interface OnDateSelectedListener {
-        void onDateSelected(int year, int month, int day);
+        void onDateSelected(int year, int month, int day, int index);
     }
 }

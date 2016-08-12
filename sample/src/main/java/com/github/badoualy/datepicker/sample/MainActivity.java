@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         final MonthView.DateLabelAdapter adapter = new MonthView.DateLabelAdapter() {
 
             @Override
-            public CharSequence getLabel(int year, int month, int day) {
+            public CharSequence getLabel(int year, int month, int day, int index) {
                 return Integer.toString(month + 1) + "/" + (year % 2000);
             }
         };

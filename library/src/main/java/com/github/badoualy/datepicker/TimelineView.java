@@ -102,7 +102,7 @@ class TimelineView extends RecyclerView {
             centerOnPosition(selectedPosition);
 
             if (onDateSelectedListener != null)
-                onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay);
+                onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay, selectedPosition);
         } else {
             post(new Runnable() {
                 @Override
@@ -194,7 +194,7 @@ class TimelineView extends RecyclerView {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             boolean isToday = DateUtils.isToday(calendar.getTimeInMillis());
 
-            holder.bind(position, year, month, day, dayOfWeek, dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day) : "",
+            holder.bind(position, year, month, day, dayOfWeek, dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day, position) : "",
                         position == selectedPosition, isToday);
         }
 
