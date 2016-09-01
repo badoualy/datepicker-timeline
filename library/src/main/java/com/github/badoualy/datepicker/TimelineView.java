@@ -28,8 +28,9 @@ class TimelineView extends RecyclerView {
     private DatePickerTimeline.OnDateSelectedListener onDateSelectedListener;
     private MonthView.DateLabelAdapter dateLabelAdapter;
 
+    private int startYear, startMonth, startDay;
     private int selectedYear, selectedMonth, selectedDay;
-    private int selectedPosition;
+    private int selectedPosition = 1;
     private TimelineAdapter adapter;
 
     // Day letter
@@ -56,18 +57,8 @@ class TimelineView extends RecyclerView {
 
     private void init() {
         calendar.setTimeInMillis(System.currentTimeMillis());
-        selectedYear = DatePickerTimeline.startYear;
-        selectedMonth = DatePickerTimeline.startMonth;
-        selectedDay = DatePickerTimeline.startDay;
-        selectedPosition = 0;
-        Log.d("TimelineView", "Start values " + selectedYear + "/" + selectedMonth + "/" + selectedDay);
         setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         resetCalendar();
-
-        lblDayColor = DatePickerTimeline.lblDayColor;
-        lblDateColor = DatePickerTimeline.lblDateColor;
-        lblDateSelectedColor = DatePickerTimeline.lblDateSelectedColor;
-        lblLabelColor = DatePickerTimeline.lblLabelColor;
 
         setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -77,7 +68,7 @@ class TimelineView extends RecyclerView {
     }
 
     private void resetCalendar() {
-        calendar.set(DatePickerTimeline.startYear, DatePickerTimeline.startMonth, DatePickerTimeline.startDay, 1, 0, 0);
+        calendar.set(startYear, startMonth, startDay, 1, 0, 0);
     }
 
     private void onDateSelected(int position, int year, int month, int day) {
@@ -168,6 +159,38 @@ class TimelineView extends RecyclerView {
         this.dateLabelAdapter = dateLabelAdapter;
     }
 
+    public void setDayLabelColor(int lblDayColor) {
+        this.lblDayColor = lblDayColor;
+    }
+
+    public void setDateLabelColor(int lblDateColor) {
+        this.lblDateColor = lblDateColor;
+    }
+
+    public void setDateLabelSelectedColor(int lblDateSelectedColor) {
+        this.lblDateSelectedColor = lblDateSelectedColor;
+    }
+
+    public void setLabelColor(int lblLabelColor) {
+        this.lblLabelColor = lblLabelColor;
+    }
+
+    public void setFirstDate(int startYear, int startMonth, int startDay) {
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        this.startDay = startDay;
+
+        if (selectedYear < startYear
+                || (selectedYear == startYear && (selectedMonth < startMonth || selectedMonth == startMonth && selectedDay < startDay))) {
+            selectedYear = startYear;
+            selectedMonth = startMonth;
+            selectedDay = startDay;
+            selectedPosition = 0;
+            if (adapter != null)
+                adapter.notifyDataSetChanged();
+        }
+    }
+
     private class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
         public TimelineAdapter() {
@@ -194,7 +217,8 @@ class TimelineView extends RecyclerView {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             boolean isToday = DateUtils.isToday(calendar.getTimeInMillis());
 
-            holder.bind(position, year, month, day, dayOfWeek, dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day, position) : "",
+            holder.bind(position, year, month, day, dayOfWeek,
+                        dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day, position) : "",
                         position == selectedPosition, isToday);
         }
 
