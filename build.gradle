@@ -22,8 +22,8 @@ allprojects {
 // project and then reference this from the modules
 ext {
     compileSdkVersion = 24
-    buildToolsVersion = "24.0.1"
-    supportLibVersion = "24.1.1"
+    buildToolsVersion = "24.0.2"
+    supportLibVersion = "24.2.0"
 }
 
 task wrapper(type: Wrapper) {

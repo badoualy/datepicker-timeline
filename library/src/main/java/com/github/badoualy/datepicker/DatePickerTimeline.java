@@ -159,6 +159,14 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         timelineView.setSelectedDate(year, month, 1);
     }
 
+    public void setFirstVisibleDate(int year, int month, int day) {
+        DatePickerTimeline.startYear = year;
+        DatePickerTimeline.startMonth = month;
+        DatePickerTimeline.startDay = day;
+
+        monthView.update();
+    }
+
     public interface OnDateSelectedListener {
         void onDateSelected(int year, int month, int day, int index);
     }
