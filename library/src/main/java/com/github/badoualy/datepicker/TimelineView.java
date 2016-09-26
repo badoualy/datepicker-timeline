@@ -67,16 +67,6 @@ class TimelineView extends RecyclerView {
         setAdapter(adapter);
     }
 
-    void update() {
-        lblDayColor = DatePickerTimeline.lblDayColor;
-        lblDateColor = DatePickerTimeline.lblDateColor;
-        lblDateSelectedColor = DatePickerTimeline.lblDateSelectedColor;
-        lblLabelColor = DatePickerTimeline.lblLabelColor;
-
-        if (adapter != null)
-            adapter.notifyDataSetChanged();
-    }
-
     private void resetCalendar() {
         calendar.set(startYear, startMonth, startDay, 1, 0, 0);
     }
