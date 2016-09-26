@@ -14,6 +14,5 @@
         android:id="@+id/mti_timeline"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="#fff"
         tools:listitem="@layout/mti_item_day"/>
 </merge>

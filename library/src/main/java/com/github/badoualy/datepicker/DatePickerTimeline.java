@@ -3,6 +3,7 @@ package com.github.badoualy.datepicker;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -19,21 +20,6 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
     private MonthView monthView;
     private TimelineView timelineView;
     private OnDateSelectedListener onDateSelectedListener;
-
-    static int startYear, startMonth, startDay;
-
-    // Attrs, a bit ugly
-    static int primaryColor, primaryDarkColor;
-    // Month view
-    static int tabSelectedColor, tabBeforeSelectionColor;
-    // Day letter
-    static int lblDayColor;
-    // Day number label
-    static int lblDateColor, lblDateSelectedColor;
-    static int bgLblDateSelectedColor, ringLblDateSelectedColor;
-    static int bgLblTodayColor;
-    // Label
-    static int lblLabelColor;
 
     public DatePickerTimeline(Context context) {
         this(context, null);
@@ -57,26 +43,26 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         final Calendar instance = Calendar.getInstance();
-        startYear = instance.get(Calendar.YEAR);
+        int startYear = instance.get(Calendar.YEAR);
         if (instance.get(Calendar.MONTH) == Calendar.JANUARY) {
             // If we are in january, we'll probably want to have previous year :)
             startYear--;
         }
-        startMonth = Calendar.JANUARY;
-        startDay = 1;
+        int startMonth = Calendar.JANUARY;
+        int startDay = 1;
 
         // Load default values
-        primaryColor = Utils.getPrimaryColor(getContext());
-        primaryDarkColor = Utils.getPrimaryDarkColor(getContext());
-        tabSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_selected);
-        tabBeforeSelectionColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_before_selection);
-        lblDayColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_day);
-        lblDateColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_date);
-        lblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_date_selected);
-        bgLblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_bg_lbl_date_selected_color);
-        ringLblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_ring_lbl_date_color);
-        bgLblTodayColor = ContextCompat.getColor(getContext(), R.color.mti_bg_lbl_today);
-        lblLabelColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_label);
+        int primaryColor = Utils.getPrimaryColor(getContext());
+        int primaryDarkColor = Utils.getPrimaryDarkColor(getContext());
+        int tabSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_selected);
+        int tabBeforeSelectionColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_before_selection);
+        int lblDayColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_day);
+        int lblDateColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_date);
+        int lblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_date_selected);
+        int bgLblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_bg_lbl_date_selected_color);
+        int ringLblDateSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_ring_lbl_date_color);
+        int bgLblTodayColor = ContextCompat.getColor(getContext(), R.color.mti_bg_lbl_today);
+        int lblLabelColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_label);
 
         // Load xml attrs
         final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DatePickerTimeline, defStyleAttr, 0);
@@ -105,7 +91,19 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         monthView = (MonthView) view.findViewById(R.id.mti_month_view);
         timelineView = (TimelineView) view.findViewById(R.id.mti_timeline);
 
+        monthView.setBackgroundColor(primaryColor);
+        monthView.setFirstDate(startYear, startMonth);
+        monthView.setDefaultColor(primaryDarkColor);
+        monthView.setColorSelected(tabSelectedColor);
+        monthView.setColorBeforeSelection(tabBeforeSelectionColor);
         monthView.setOnMonthSelectedListener(this);
+
+        timelineView.setBackgroundColor(Color.WHITE);
+        timelineView.setFirstDate(startYear, startMonth, startDay);
+        timelineView.setDayLabelColor(lblDayColor);
+        timelineView.setDateLabelColor(lblDateColor);
+        timelineView.setDateLabelSelectedColor(lblDateSelectedColor);
+        timelineView.setLabelColor(lblLabelColor);
         timelineView.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
@@ -129,6 +127,13 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         return timelineView.getSelectedDay();
     }
 
+    public void setFirstDate(int year, int month, int day) {
+        monthView.setFirstDate(year, month);
+        monthView.getAdapter().notifyDataSetChanged();
+        timelineView.setFirstDate(year, month, day);
+        timelineView.getAdapter().notifyDataSetChanged();
+    }
+
     public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {
         this.onDateSelectedListener = onDateSelectedListener;
     }
@@ -139,6 +144,14 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
 
     public void setDateLabelAdapter(@Nullable MonthView.DateLabelAdapter dateLabelAdapter) {
         timelineView.setDateLabelAdapter(dateLabelAdapter);
+    }
+
+    public MonthView getMonthView() {
+        return monthView;
+    }
+
+    public TimelineView getTimelineView() {
+        return timelineView;
     }
 
     @Override

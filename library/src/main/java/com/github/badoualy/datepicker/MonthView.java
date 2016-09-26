@@ -24,6 +24,8 @@ public class MonthView extends RecyclerView {
 
     private int defaultColor, colorSelected, colorBeforeSelection;
 
+    private int startYear, startMonth;
+
     private int selectedYear, selectedMonth;
     private int selectedPosition = -1;
 
@@ -43,14 +45,8 @@ public class MonthView extends RecyclerView {
     }
 
     private void init() {
-        selectedYear = DatePickerTimeline.startYear;
-        selectedMonth = DatePickerTimeline.startMonth;
         final Calendar calendar = Calendar.getInstance();
         setSelectedMonth(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), false);
-
-        defaultColor = DatePickerTimeline.primaryDarkColor;
-        colorSelected = DatePickerTimeline.tabSelectedColor;
-        colorBeforeSelection = DatePickerTimeline.tabBeforeSelectionColor;
 
         for (int i = 0; i < MONTHS.length; i++) {
             if (MONTHS[i] != null && MONTHS[i].length() > 3)
@@ -130,15 +126,15 @@ public class MonthView extends RecyclerView {
     }
 
     private int getYearForPosition(int position) {
-        return (position + DatePickerTimeline.startMonth) / 12 + DatePickerTimeline.startYear;
+        return (position + startMonth) / 12 + startYear;
     }
 
     private int getMonthForPosition(int position) {
-        return (DatePickerTimeline.startMonth + position) % 12;
+        return (startMonth + position) % 12;
     }
 
     private int getPositionForDate(int year, int month) {
-        return (12 * (year - DatePickerTimeline.startYear) + month) - DatePickerTimeline.startMonth;
+        return (12 * (year - startYear) + month) - startMonth;
     }
 
     public void setOnMonthSelectedListener(OnMonthSelectedListener onMonthSelectedListener) {
@@ -147,6 +143,34 @@ public class MonthView extends RecyclerView {
 
     public OnMonthSelectedListener getOnMonthSelectedListener() {
         return onMonthSelectedListener;
+    }
+
+    /** Default indicator and text color */
+    public void setDefaultColor(int defaultColor) {
+        this.defaultColor = defaultColor;
+    }
+
+    /** Color when month is selected */
+    public void setColorSelected(int colorSelected) {
+        this.colorSelected = colorSelected;
+    }
+
+    /** Color when month is before the current selected month */
+    public void setColorBeforeSelection(int colorBeforeSelection) {
+        this.colorBeforeSelection = colorBeforeSelection;
+    }
+
+    public void setFirstDate(int startYear, int startMonth) {
+        this.startYear = startYear;
+        this.startMonth = startMonth;
+        if (selectedYear < startYear
+                || (selectedYear == startYear && selectedMonth < startMonth)) {
+            selectedYear = startYear;
+            selectedMonth = startMonth;
+            selectedPosition = 0;
+            if (adapter != null)
+                adapter.notifyDataSetChanged();
+        }
     }
 
     private class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder> {
