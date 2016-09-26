@@ -269,7 +269,7 @@ public class TimelineView extends RecyclerView {
             this.month = month;
             this.day = day;
 
-            lblDay.setText(WEEK_DAYS[dayOfWeek]);
+            lblDay.setText(WEEK_DAYS[dayOfWeek].toUpperCase(Locale.US));
             lblDate.setText(String.valueOf(day));
             lblValue.setText(label);
 

@@ -50,11 +50,6 @@ public class MonthView extends RecyclerView {
         final Calendar calendar = Calendar.getInstance();
         setSelectedMonth(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), false);
 
-        for (int i = 0; i < MONTHS.length; i++) {
-            if (MONTHS[i] != null && MONTHS[i].length() > 3)
-                MONTHS[i] = MONTHS[i].substring(0, 3).toUpperCase(Locale.US);
-        }
-
         setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         adapter = new MonthAdapter();
@@ -214,7 +209,7 @@ public class MonthView extends RecyclerView {
             this.year = year;
             this.month = month;
 
-            lbl.setText(MONTHS[month]);
+            lbl.setText(MONTHS[month].substring(0, 3).toUpperCase(Locale.US));
             int color = selected ? colorSelected : beforeSelection ? colorBeforeSelection : defaultColor;
             lbl.setTextColor(color);
             indicator.setColor(color);
