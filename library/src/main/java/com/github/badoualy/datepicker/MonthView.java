@@ -64,6 +64,22 @@ public class MonthView extends RecyclerView {
         setAdapter(adapter);
     }
 
+    void update() {
+        if (selectedYear < DatePickerTimeline.startYear
+                || (selectedYear == DatePickerTimeline.startYear && selectedMonth < DatePickerTimeline.startMonth)) {
+            selectedYear = DatePickerTimeline.startYear;
+            selectedMonth = DatePickerTimeline.startMonth;
+            final Calendar calendar = Calendar.getInstance();
+            setSelectedMonth(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), false);
+        }
+
+        defaultColor = DatePickerTimeline.primaryDarkColor;
+        colorSelected = DatePickerTimeline.tabSelectedColor;
+        colorBeforeSelection = DatePickerTimeline.tabBeforeSelectionColor;
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
+    }
+
     public void setSelectedMonth(int year, int month, boolean callListener) {
         onMonthSelected(year, month, callListener);
     }

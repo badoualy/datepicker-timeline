@@ -76,6 +76,16 @@ class TimelineView extends RecyclerView {
         setAdapter(adapter);
     }
 
+    void update() {
+        lblDayColor = DatePickerTimeline.lblDayColor;
+        lblDateColor = DatePickerTimeline.lblDateColor;
+        lblDateSelectedColor = DatePickerTimeline.lblDateSelectedColor;
+        lblLabelColor = DatePickerTimeline.lblLabelColor;
+
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
+    }
+
     private void resetCalendar() {
         calendar.set(DatePickerTimeline.startYear, DatePickerTimeline.startMonth, DatePickerTimeline.startDay, 1, 0, 0);
     }
@@ -194,7 +204,8 @@ class TimelineView extends RecyclerView {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             boolean isToday = DateUtils.isToday(calendar.getTimeInMillis());
 
-            holder.bind(position, year, month, day, dayOfWeek, dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day, position) : "",
+            holder.bind(position, year, month, day, dayOfWeek,
+                        dateLabelAdapter != null ? dateLabelAdapter.getLabel(year, month, day, position) : "",
                         position == selectedPosition, isToday);
         }
 
