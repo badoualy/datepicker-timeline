@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-class TimelineView extends RecyclerView {
+public class TimelineView extends RecyclerView {
 
     private static final String TAG = "TimelineView";
 
