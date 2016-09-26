@@ -116,6 +116,9 @@ public class TimelineView extends RecyclerView {
     }
 
     public void setSelectedDate(int year, int month, int day) {
+        if (year == startYear && month == startMonth && day < startDay)
+            day = startDay;
+
         Log.d(TAG, "setSelectedDate() called with: " + "year = [" + year + "], month = [" + month + "], day = [" + day + "]");
         // Get new selected dayOfYear
         calendar.set(year, month, day, 1, 0, 0);
