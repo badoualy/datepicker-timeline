@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import com.github.badoualy.datepicker.DatePickerTimeline;
 import com.github.badoualy.datepicker.MonthView;
 
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         timeline.setDateLabelAdapter(adapter);
+
+        //timeline.setFirstVisibleDate(2016, Calendar.JULY, 19);
     }
 
 }

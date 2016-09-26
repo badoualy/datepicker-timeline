@@ -42,10 +42,10 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        final Calendar instance = Calendar.getInstance();
-        int startYear = instance.get(Calendar.YEAR);
+        final Calendar calendar = Calendar.getInstance();
+        int startYear = calendar.get(Calendar.YEAR);
         //noinspection WrongConstant
-        if (instance.get(Calendar.MONTH) == Calendar.JANUARY) {
+        if (calendar.get(Calendar.MONTH) == Calendar.JANUARY) {
             // If we are in january, we'll probably want to have previous year :)
             startYear--;
         }
@@ -114,6 +114,8 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
                     onDateSelectedListener.onDateSelected(year, month, day, index);
             }
         });
+
+        timelineView.setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public int getSelectedYear() {
@@ -126,13 +128,6 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
 
     public int getSelectedDay() {
         return timelineView.getSelectedDay();
-    }
-
-    public void setFirstDate(int year, int month, int day) {
-        monthView.setFirstDate(year, month);
-        monthView.getAdapter().notifyDataSetChanged();
-        timelineView.setFirstDate(year, month, day);
-        timelineView.getAdapter().notifyDataSetChanged();
     }
 
     public void setOnDateSelectedListener(OnDateSelectedListener onDateSelectedListener) {

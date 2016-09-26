@@ -1,6 +1,7 @@
 package com.github.badoualy.datepicker;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,8 +73,6 @@ class TimelineView extends RecyclerView {
     }
 
     private void onDateSelected(int position, int year, int month, int day) {
-        Log.d(TAG,
-              "onDateSelected() called with: " + "position = [" + position + "], year = [" + year + "], month = [" + month + "], day = [" + day + "]");
         if (position == selectedPosition) {
             centerOnPosition(selectedPosition);
             return;
@@ -105,6 +104,12 @@ class TimelineView extends RecyclerView {
     }
 
     private void centerOnPosition(int position) {
+        if (getChildCount() == 0) {
+            return;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!isLaidOut())
+                return;
+        }
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
         layoutManager.scrollToPositionWithOffset(position, offset);
@@ -176,24 +181,23 @@ class TimelineView extends RecyclerView {
     }
 
     public void setFirstDate(int startYear, int startMonth, int startDay) {
+        Log.d(TAG,
+              "setFirstDate() called with: startYear = [" + startYear + "], startMonth = [" + startMonth + "], startDay = [" + startDay + "]");
         this.startYear = startYear;
         this.startMonth = startMonth;
         this.startDay = startDay;
 
-        if (selectedYear < startYear
-                || (selectedYear == startYear && (selectedMonth < startMonth || selectedMonth == startMonth && selectedDay < startDay))) {
-            selectedYear = startYear;
-            selectedMonth = startMonth;
-            selectedDay = startDay;
-            selectedPosition = 0;
-            if (adapter != null)
-                adapter.notifyDataSetChanged();
-        }
+        selectedYear = startYear;
+        selectedMonth = startMonth;
+        selectedDay = startDay;
+        selectedPosition = 0;
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     private class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
 
-        public TimelineAdapter() {
+        TimelineAdapter() {
 
         }
 

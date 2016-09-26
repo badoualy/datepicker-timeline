@@ -1,10 +1,12 @@
 package com.github.badoualy.datepicker;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +106,12 @@ public class MonthView extends RecyclerView {
     }
 
     private void centerOnPosition(int position) {
+        if (getChildCount() == 0) {
+            return;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!isLaidOut())
+                return;
+        }
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
         layoutManager.scrollToPositionWithOffset(position, offset);
@@ -147,19 +155,16 @@ public class MonthView extends RecyclerView {
     public void setFirstDate(int startYear, int startMonth) {
         this.startYear = startYear;
         this.startMonth = startMonth;
-        if (selectedYear < startYear
-                || (selectedYear == startYear && selectedMonth < startMonth)) {
-            selectedYear = startYear;
-            selectedMonth = startMonth;
-            selectedPosition = 0;
-            if (adapter != null)
-                adapter.notifyDataSetChanged();
-        }
+        selectedYear = startYear;
+        selectedMonth = startMonth;
+        selectedPosition = 0;
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     private class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder> {
 
-        public MonthAdapter() {
+        MonthAdapter() {
 
         }
 
