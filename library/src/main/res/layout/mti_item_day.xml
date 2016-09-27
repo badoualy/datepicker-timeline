@@ -7,7 +7,7 @@
     android:layout_height="@dimen/mti_timeline_height"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="6dp">
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/lbl_day"
@@ -34,11 +34,12 @@
 
     <TextView
         android:id="@+id/lbl_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
+        android:gravity="center_horizontal"
         android:singleLine="true"
         android:textColor="@color/mti_lbl_label"
         android:textSize="@dimen/mti_lbl_day"
