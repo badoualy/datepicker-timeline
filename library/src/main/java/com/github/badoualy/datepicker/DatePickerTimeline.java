@@ -169,6 +169,14 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         timelineView.centerOnSelection();
     }
 
+    public int getMonthSelectedPosition() {
+        return monthView.getSelectedPosition();
+    }
+
+    public int getTimlineSelectedPosition() {
+        return timelineView.getSelectedPosition();
+    }
+
     public interface OnDateSelectedListener {
         void onDateSelected(int year, int month, int day, int index);
     }

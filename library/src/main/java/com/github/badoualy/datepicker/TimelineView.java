@@ -159,6 +159,10 @@ public class TimelineView extends RecyclerView {
         return selectedDay;
     }
 
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
     public void setOnDateSelectedListener(DatePickerTimeline.OnDateSelectedListener onDateSelectedListener) {
         this.onDateSelectedListener = onDateSelectedListener;
     }

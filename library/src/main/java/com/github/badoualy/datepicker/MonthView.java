@@ -115,6 +115,10 @@ public class MonthView extends RecyclerView {
         centerOnPosition(selectedPosition);
     }
 
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
+
     private int getYearForPosition(int position) {
         return (position + startMonth) / 12 + startYear;
     }
