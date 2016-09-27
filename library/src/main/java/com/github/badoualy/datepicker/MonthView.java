@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ public class MonthView extends RecyclerView {
 
     private int defaultColor, colorSelected, colorBeforeSelection;
 
-    private int startYear, startMonth;
+    private int startYear = 1970, startMonth = 0;
 
     private int selectedYear, selectedMonth;
     private int selectedPosition = -1;
@@ -110,6 +109,10 @@ public class MonthView extends RecyclerView {
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
         layoutManager.scrollToPositionWithOffset(position, offset);
+    }
+
+    public void centerOnSelection() {
+        centerOnPosition(selectedPosition);
     }
 
     private int getYearForPosition(int position) {

@@ -29,7 +29,7 @@ public class TimelineView extends RecyclerView {
     private DatePickerTimeline.OnDateSelectedListener onDateSelectedListener;
     private MonthView.DateLabelAdapter dateLabelAdapter;
 
-    private int startYear, startMonth, startDay;
+    private int startYear = 1970, startMonth = 0, startDay = 1;
     private int selectedYear, selectedMonth, selectedDay;
     private int selectedPosition = 1;
     private TimelineAdapter adapter;
@@ -113,6 +113,10 @@ public class TimelineView extends RecyclerView {
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
         layoutManager.scrollToPositionWithOffset(position, offset);
+    }
+
+    public void centerOnSelection() {
+        centerOnPosition(selectedPosition);
     }
 
     public void setSelectedDate(int year, int month, int day) {
