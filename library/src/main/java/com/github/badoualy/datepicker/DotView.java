@@ -58,7 +58,6 @@ public class DotView extends View {
         canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, size / 2, paint);
     }
 
-
     public void setColor(@ColorInt int color) {
         paint.setColor(color);
         invalidate();

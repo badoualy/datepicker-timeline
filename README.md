@@ -1,11 +1,36 @@
 [![Release](https://jitpack.io/v/badoualy/datepicker-timeline.svg)](https://jitpack.io/#badoualy/datepicker-timeline)
 
+# ![](https://github.com/badoualy/datepicker-timeline/blob/master/sample/src/main/res/mipmap-mdpi/ic_launcher.png) DatePicker Timeline
+> ### Designed by the awesome https://dribbble.com/LeslyPyram :)
+
+Setup
+----------------
+
+First, add jitpack in your build.gradle at the end of repositories:
+ ```gradle
+repositories {
+    // ...
+    maven { url "https://jitpack.io" }
+}
+```
+
+Then, add the library dependency:
+```gradle
+compile 'com.github.badoualy:datepicker-timeline:ae065cc44d'
+```
+
+Now go do some awesome stuff!
+
+Usage
+----------------
+
+
 Licence
 ----------------
 ```
 The MIT License (MIT)
 
-Copyright (c) 2015 Yannick Badoual
+Copyright (c) 2016 Yannick Badoual
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

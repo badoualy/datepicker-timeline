@@ -3,46 +3,48 @@
     android:id="@+id/mt_layout_toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="50dp"
+    android:layout_width="@dimen/mti_timeline_width"
     android:layout_height="@dimen/mti_timeline_height"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="4dp">
 
     <TextView
-        android:id="@+id/lbl_day"
+        android:id="@+id/mti_timeline_lbl_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="1"
+        android:maxLines="1"
         android:singleLine="true"
         android:textColor="@color/mti_lbl_day"
-        android:textSize="@dimen/mti_lbl_day"
+        android:textSize="@dimen/mti_timeline_lbl_day_text"
         tools:text="T"/>
 
     <TextView
-        android:id="@+id/lbl_date"
+        android:id="@+id/timeline_mti_lbl_date"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/mti_bg_lbl_date_selected"
         android:gravity="center"
         android:maxLength="2"
+        android:maxLines="1"
         android:singleLine="true"
         android:textColor="#FFFFFF"
-        android:textSize="@dimen/mti_lbl_date"
+        android:textSize="@dimen/mti_timeline_lbl_date_text"
         tools:text="25"/>
 
     <TextView
-        android:id="@+id/lbl_value"
+        android:id="@+id/mti_timeline_lbl_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
-        android:maxLines="1"
         android:gravity="center_horizontal"
+        android:maxLines="1"
         android:singleLine="true"
         android:textColor="@color/mti_lbl_label"
-        android:textSize="@dimen/mti_lbl_day"
+        android:textSize="@dimen/mti_timeline_lbl_day_text"
         tools:text="+ 9999"/>
 
 </LinearLayout>

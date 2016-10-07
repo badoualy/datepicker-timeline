@@ -3,12 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:parentTag="LinearLayout">
 
     <com.github.badoualy.datepicker.MonthView
         android:id="@+id/mti_month_view"
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="48dp"
+        tools:background="@color/mti_default_primary"
+        tools:listitem="@layout/mti_item_month"/>
 
     <com.github.badoualy.datepicker.TimelineView
         android:id="@+id/mti_timeline"

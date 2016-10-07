@@ -99,7 +99,7 @@ public class MonthView extends RecyclerView {
         }
     }
 
-    private void centerOnPosition(int position) {
+    public void centerOnPosition(int position) {
         if (getChildCount() == 0) {
             return;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -107,12 +107,35 @@ public class MonthView extends RecyclerView {
                 return;
         }
         // Animate scroll
-        int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
+        int offset = getMeasuredWidth() / 2 - getItemWidth() / 2;
         layoutManager.scrollToPositionWithOffset(position, offset);
+    }
+
+    public void centerOnDate(int year, int month) {
+        centerOnPosition(getPositionForDate(year, month));
     }
 
     public void centerOnSelection() {
         centerOnPosition(selectedPosition);
+    }
+
+    void scrollToYearPosition(int year, int offsetYear) {
+        if (getChildCount() == 0) {
+            return;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!isLaidOut())
+                return;
+        }
+        // Animate scroll
+        layoutManager.scrollToPositionWithOffset(getPositionForDate(year + 1, 0), offsetYear + getMeasuredWidth() / 2 - getItemWidth() / 2);
+    }
+
+    int getItemWidth() {
+        return getChildAt(0).getMeasuredWidth();
+    }
+
+    int getYearWidth() {
+        return getItemWidth() * 12;
     }
 
     public int getSelectedPosition() {
@@ -154,6 +177,18 @@ public class MonthView extends RecyclerView {
         this.colorBeforeSelection = colorBeforeSelection;
     }
 
+    public int getDefaultColor() {
+        return defaultColor;
+    }
+
+    public int getColorBeforeSelection() {
+        return colorBeforeSelection;
+    }
+
+    public int getColorSelected() {
+        return colorSelected;
+    }
+
     public void setFirstDate(int startYear, int startMonth) {
         this.startYear = startYear;
         this.startMonth = startMonth;
@@ -191,18 +226,18 @@ public class MonthView extends RecyclerView {
 
     }
 
-    public class MonthViewHolder extends RecyclerView.ViewHolder {
+    private class MonthViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView lbl;
         private final DotView indicator;
 
         private int year, month;
 
-        public MonthViewHolder(View root) {
+        MonthViewHolder(View root) {
             super(root);
 
             indicator = (DotView) root.findViewById(R.id.mti_view_indicator);
-            lbl = (TextView) root.findViewById(R.id.mti_lbl_tab);
+            lbl = (TextView) root.findViewById(R.id.mti_month_lbl);
 
             root.setOnClickListener(new OnClickListener() {
                 @Override
@@ -212,7 +247,7 @@ public class MonthView extends RecyclerView {
             });
         }
 
-        public void bind(int year, int month, boolean selected, boolean beforeSelection) {
+        void bind(int year, int month, boolean selected, boolean beforeSelection) {
             this.year = year;
             this.month = month;
 
@@ -229,6 +264,6 @@ public class MonthView extends RecyclerView {
     }
 
     public interface DateLabelAdapter {
-        CharSequence getLabel(int year, int month, int day, int index);
+        CharSequence getLabel(Calendar calendar, int index);
     }
 }

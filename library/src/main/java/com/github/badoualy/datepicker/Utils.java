@@ -12,7 +12,7 @@ final class Utils {
 
     }
 
-    public static int getPrimaryColor(final Context context) {
+    static int getPrimaryColor(final Context context) {
         int color = context.getResources().getIdentifier("colorPrimary", "attr", context.getPackageName());
         if (color != 0) {
             // If using support library v7 primaryColor
@@ -33,7 +33,7 @@ final class Utils {
         return color;
     }
 
-    public static int getPrimaryDarkColor(final Context context) {
+    static int getPrimaryDarkColor(final Context context) {
         int color = context.getResources().getIdentifier("colorPrimaryDark", "attr", context.getPackageName());
         if (color != 0) {
             // If using support library v7 primaryColor
