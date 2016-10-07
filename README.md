@@ -3,6 +3,8 @@
 # ![](https://github.com/badoualy/datepicker-timeline/blob/master/sample/src/main/res/mipmap-mdpi/ic_launcher.png) DatePicker Timeline
 > ### Designed by the awesome https://dribbble.com/LeslyPyram :)
 
+<img src="https://github.com/badoualy/datepicker-timeline/blob/master/ART/ic_brand.jpg" width="300">
+
 Setup
 ----------------
 
