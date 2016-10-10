@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         final MonthView.DateLabelAdapter adapter = new MonthView.DateLabelAdapter() {
 
             @Override
-            public CharSequence getLabel(int year, int month, int day, int index) {
-                return Integer.toString(month + 1) + "/" + (year % 2000);
+            public CharSequence getLabel(Calendar calendar, int index) {
+                return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" + (calendar.get(Calendar.YEAR) % 2000);
             }
         };
         timeline.setDateLabelAdapter(adapter);
