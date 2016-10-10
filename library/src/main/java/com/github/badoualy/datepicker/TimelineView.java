@@ -118,6 +118,12 @@ public class TimelineView extends RecyclerView {
         centerOnPosition(selectedPosition);
     }
 
+    public void setSelectedPosition(int position) {
+        resetCalendar();
+        calendar.add(Calendar.DAY_OF_YEAR, position);
+        onDateSelected(position, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
     public void setSelectedDate(int year, int month, int day) {
         if (year == startYear && month == startMonth && day < startDay)
             day = startDay;
