@@ -56,8 +56,16 @@ public class MonthView extends RecyclerView {
         setAdapter(adapter);
     }
 
+    public void setSelectedMonth(int year, int month) {
+        setSelectedMonth(year, month, true, true);
+    }
+
     public void setSelectedMonth(int year, int month, boolean callListener) {
-        onMonthSelected(year, month, callListener);
+        setSelectedMonth(year, month, callListener, true);
+    }
+
+    public void setSelectedMonth(int year, int month, boolean callListener, boolean centerOnPosition) {
+        onMonthSelected(year, month, callListener, centerOnPosition);
     }
 
     public int getSelectedYear() {
@@ -68,14 +76,15 @@ public class MonthView extends RecyclerView {
         return selectedMonth;
     }
 
-    private void onMonthSelected(int year, int month, boolean callListener) {
+    private void onMonthSelected(int year, int month, boolean callListener, boolean centerOnPosition) {
         int oldPosition = selectedPosition;
         selectedPosition = getPositionForDate(year, month);
         selectedYear = year;
         selectedMonth = month;
 
         if (selectedPosition == oldPosition) {
-            centerOnPosition(selectedPosition);
+            if (centerOnPosition)
+                centerOnPosition(selectedPosition);
             return;
         }
 
@@ -85,11 +94,12 @@ public class MonthView extends RecyclerView {
             adapter.notifyItemRangeChanged(rangeStart, rangeEnd - rangeStart + 1);
 
             // Animate scroll
-            centerOnPosition(selectedPosition);
+            if (centerOnPosition)
+                centerOnPosition(selectedPosition);
 
             if (callListener && onMonthSelectedListener != null)
                 onMonthSelectedListener.onMonthSelected(year, month, selectedPosition);
-        } else {
+        } else if (centerOnPosition) {
             post(new Runnable() {
                 @Override
                 public void run() {
@@ -242,7 +252,7 @@ public class MonthView extends RecyclerView {
             root.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onMonthSelected(year, month, true);
+                    onMonthSelected(year, month, true, true);
                 }
             });
         }

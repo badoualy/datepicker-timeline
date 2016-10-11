@@ -21,7 +21,7 @@
         tools:text="T"/>
 
     <TextView
-        android:id="@+id/timeline_mti_lbl_date"
+        android:id="@+id/mti_timeline_lbl_date"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginTop="12dp"

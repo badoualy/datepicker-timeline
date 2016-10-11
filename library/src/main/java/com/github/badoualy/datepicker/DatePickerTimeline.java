@@ -20,6 +20,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
     private MonthView monthView;
     private TimelineView timelineView;
     private OnDateSelectedListener onDateSelectedListener;
+    private TimelineScrollListener timelineScrollListener;
 
     public DatePickerTimeline(Context context) {
         this(context, null);
@@ -78,6 +79,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         ringLblDateSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_ringLblDateSelectedColor, ringLblDateSelectedColor);
         bgLblTodayColor = a.getColor(R.styleable.DatePickerTimeline_mti_bgLblTodayColor, bgLblTodayColor);
         lblLabelColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblLabelColor, lblLabelColor);
+        boolean followScroll = a.getBoolean(R.styleable.DatePickerTimeline_mti_followScroll, true);
         a.recycle();
 
         final LayerDrawable selectedDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.mti_bg_lbl_date_selected);
@@ -108,7 +110,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         timelineView.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(int year, int month, int day, int index) {
-                monthView.setSelectedMonth(year, month, false);
+                monthView.setSelectedMonth(year, month, false, timelineScrollListener == null);
 
                 if (onDateSelectedListener != null)
                     onDateSelectedListener.onDateSelected(year, month, day, index);
@@ -117,7 +119,10 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
 
         timelineView.setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        //timelineView.addOnScrollListener(new TimelineScrollListener(monthView, timelineView));
+        if (followScroll) {
+            timelineScrollListener = new TimelineScrollListener(monthView, timelineView);
+            timelineView.addOnScrollListener(timelineScrollListener);
+        }
     }
 
     public int getSelectedYear() {
@@ -177,6 +182,16 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
 
     public int getTimelineSelectedPosition() {
         return timelineView.getSelectedPosition();
+    }
+
+    public void setFollowScroll(boolean followScroll) {
+        if (!followScroll && timelineScrollListener != null) {
+            timelineView.removeOnScrollListener(timelineScrollListener);
+            timelineScrollListener = null;
+        } else if (followScroll && timelineScrollListener == null) {
+            timelineScrollListener = new TimelineScrollListener(monthView, timelineView);
+            timelineView.addOnScrollListener(timelineScrollListener);
+        }
     }
 
     public interface OnDateSelectedListener {

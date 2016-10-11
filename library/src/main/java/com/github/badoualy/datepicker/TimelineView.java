@@ -302,7 +302,7 @@ public class TimelineView extends RecyclerView {
             super(root);
 
             lblDay = (TextView) root.findViewById(R.id.mti_timeline_lbl_day);
-            lblDate = (TextView) root.findViewById(R.id.timeline_mti_lbl_date);
+            lblDate = (TextView) root.findViewById(R.id.mti_timeline_lbl_date);
             lblValue = (TextView) root.findViewById(R.id.mti_timeline_lbl_value);
 
             lblDay.setTextColor(lblDayColor);

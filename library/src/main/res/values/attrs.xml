@@ -16,5 +16,7 @@
         <attr name="mti_bgLblTodayColor" format="color"/>
 
         <attr name="mti_lblLabelColor" format="color"/>
+
+        <attr name="mti_followScroll" format="boolean"/>
     </declare-styleable>
 </resources>
