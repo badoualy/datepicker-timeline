@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.1'
+        classpath 'com.android.tools.build:gradle:2.3.0'
     }
 }
 
@@ -21,9 +21,9 @@ allprojects {
 // To avoid manually setting the same values in all Android modules, set the value on the root
 // project and then reference this from the modules
 ext {
-    compileSdkVersion = 24
-    buildToolsVersion = "24.0.2"
-    supportLibVersion = "24.2.1"
+    compileSdkVersion = 25
+    buildToolsVersion = "25.0.0"
+    supportLibVersion = "25.3.0"
 }
 
 task wrapper(type: Wrapper) {
