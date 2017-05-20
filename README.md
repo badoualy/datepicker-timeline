@@ -1,6 +1,7 @@
 [![Release](https://jitpack.io/v/badoualy/datepicker-timeline.svg)](https://jitpack.io/#badoualy/datepicker-timeline)
 
 <img src="https://github.com/badoualy/datepicker-timeline/blob/master/ART/ic_brand.jpg" width="300">
+
 > ### Designed by the awesome https://dribbble.com/LeslyPyram :)
 
 Setup
