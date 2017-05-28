@@ -261,7 +261,7 @@ public class MonthView extends RecyclerView {
             this.year = year;
             this.month = month;
 
-            lbl.setText(MONTHS[month].substring(0, 3).toUpperCase(Locale.US));
+            lbl.setText(MONTHS[month].substring(0, 3).toUpperCase(Locale.US)+"\n"+year);
             int color = selected ? colorSelected : beforeSelection ? colorBeforeSelection : defaultColor;
             lbl.setTextColor(color);
             indicator.setColor(color);
