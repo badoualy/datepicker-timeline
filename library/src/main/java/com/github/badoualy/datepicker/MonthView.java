@@ -29,6 +29,7 @@ public class MonthView extends RecyclerView {
 
     private int selectedYear, selectedMonth;
     private int selectedPosition = -1;
+    private int monthCount = Integer.MAX_VALUE;
 
     public MonthView(Context context) {
         super(context);
@@ -83,8 +84,9 @@ public class MonthView extends RecyclerView {
         selectedMonth = month;
 
         if (selectedPosition == oldPosition) {
-            if (centerOnPosition)
+            if (centerOnPosition) {
                 centerOnPosition(selectedPosition);
+            }
             return;
         }
 
@@ -94,11 +96,13 @@ public class MonthView extends RecyclerView {
             adapter.notifyItemRangeChanged(rangeStart, rangeEnd - rangeStart + 1);
 
             // Animate scroll
-            if (centerOnPosition)
+            if (centerOnPosition) {
                 centerOnPosition(selectedPosition);
+            }
 
-            if (callListener && onMonthSelectedListener != null)
+            if (callListener && onMonthSelectedListener != null) {
                 onMonthSelectedListener.onMonthSelected(year, month, selectedPosition);
+            }
         } else if (centerOnPosition) {
             post(new Runnable() {
                 @Override
@@ -113,8 +117,9 @@ public class MonthView extends RecyclerView {
         if (getChildCount() == 0) {
             return;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!isLaidOut())
+            if (!isLaidOut()) {
                 return;
+            }
         }
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getItemWidth() / 2;
@@ -133,11 +138,13 @@ public class MonthView extends RecyclerView {
         if (getChildCount() == 0) {
             return;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!isLaidOut())
+            if (!isLaidOut()) {
                 return;
+            }
         }
         // Animate scroll
-        layoutManager.scrollToPositionWithOffset(getPositionForDate(year + 1, 0), offsetYear + getMeasuredWidth() / 2 - getItemWidth() / 2);
+        layoutManager.scrollToPositionWithOffset(getPositionForDate(year + 1, 0),
+                                                 offsetYear + getMeasuredWidth() / 2 - getItemWidth() / 2);
     }
 
     int getItemWidth() {
@@ -172,17 +179,27 @@ public class MonthView extends RecyclerView {
         return onMonthSelectedListener;
     }
 
-    /** Default indicator and text color */
+    public int getMonthCount() {
+        return monthCount;
+    }
+
+    /**
+     * Default indicator and text color
+     */
     public void setDefaultColor(int defaultColor) {
         this.defaultColor = defaultColor;
     }
 
-    /** Color when month is selected */
+    /**
+     * Color when month is selected
+     */
     public void setColorSelected(int colorSelected) {
         this.colorSelected = colorSelected;
     }
 
-    /** Color when month is before the current selected month */
+    /**
+     * Color when month is before the current selected month
+     */
     public void setColorBeforeSelection(int colorBeforeSelection) {
         this.colorBeforeSelection = colorBeforeSelection;
     }
@@ -205,8 +222,35 @@ public class MonthView extends RecyclerView {
         selectedYear = startYear;
         selectedMonth = startMonth;
         selectedPosition = 0;
-        if (adapter != null)
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    void setMonthCount(int monthCount) {
+        if (this.monthCount == monthCount) {
+            return;
+        }
+
+        this.monthCount = monthCount;
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void setLastDate(int endYear, int endMonth) {
+        if (endYear < startYear || (endYear == startYear && endMonth < startMonth)) {
+            throw new IllegalArgumentException("Last visible date cannot be before first visible date");
+        }
+
+        Calendar firstDate = Calendar.getInstance();
+        firstDate.set(startYear, startMonth, 1);
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(endYear, endMonth, 1);
+        int diffYear = lastDate.get(Calendar.YEAR) - firstDate.get(Calendar.YEAR);
+        int diffMonth = diffYear * 12 + lastDate.get(Calendar.MONTH) - firstDate.get(Calendar.MONTH);
+
+        setMonthCount(diffMonth + 1);
     }
 
     private class MonthAdapter extends RecyclerView.Adapter<MonthViewHolder> {
@@ -231,9 +275,8 @@ public class MonthView extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            return Integer.MAX_VALUE;
+            return monthCount;
         }
-
     }
 
     private class MonthViewHolder extends RecyclerView.ViewHolder {
@@ -270,10 +313,12 @@ public class MonthView extends RecyclerView {
     }
 
     public interface OnMonthSelectedListener {
+
         void onMonthSelected(int year, int month, int index);
     }
 
     public interface DateLabelAdapter {
+
         CharSequence getLabel(Calendar calendar, int index);
     }
 }

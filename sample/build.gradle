@@ -8,8 +8,8 @@ android {
 
     defaultConfig {
         applicationId "com.github.badoualy.datepicker.sample"
-        minSdkVersion 10
-        targetSdkVersion 24
+        minSdkVersion 14
+        targetSdkVersion 25
         versionCode 1
         versionName '1.0.0'
     }

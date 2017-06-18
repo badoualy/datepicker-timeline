@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         };
         timeline.setDateLabelAdapter(adapter);
 
+        timeline.setLastVisibleDate(2020, Calendar.JULY, 19);
         //timeline.setFirstVisibleDate(2016, Calendar.JULY, 19);
     }
 

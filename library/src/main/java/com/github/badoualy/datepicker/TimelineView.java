@@ -24,6 +24,8 @@ public class TimelineView extends RecyclerView {
     private static final String[] WEEK_DAYS = DateFormatSymbols.getInstance().getShortWeekdays();
 
     private final Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
+    private TimelineAdapter adapter;
     private LinearLayoutManager layoutManager;
     private DatePickerTimeline.OnDateSelectedListener onDateSelectedListener;
     private MonthView.DateLabelAdapter dateLabelAdapter;
@@ -31,7 +33,7 @@ public class TimelineView extends RecyclerView {
     private int startYear = 1970, startMonth = 0, startDay = 1;
     private int selectedYear, selectedMonth, selectedDay;
     private int selectedPosition = 1;
-    private TimelineAdapter adapter;
+    private int dayCount = Integer.MAX_VALUE;
 
     // Day letter
     private int lblDayColor;
@@ -90,8 +92,9 @@ public class TimelineView extends RecyclerView {
 
             centerOnPosition(selectedPosition);
 
-            if (onDateSelectedListener != null)
+            if (onDateSelectedListener != null) {
                 onDateSelectedListener.onDateSelected(selectedYear, selectedMonth, selectedDay, selectedPosition);
+            }
         } else {
             post(new Runnable() {
                 @Override
@@ -106,8 +109,9 @@ public class TimelineView extends RecyclerView {
         if (getChildCount() == 0) {
             return;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!isLaidOut())
+            if (!isLaidOut()) {
                 return;
+            }
         }
         // Animate scroll
         int offset = getMeasuredWidth() / 2 - getChildAt(0).getMeasuredWidth() / 2;
@@ -121,12 +125,14 @@ public class TimelineView extends RecyclerView {
     public void setSelectedPosition(int position) {
         resetCalendar();
         calendar.add(Calendar.DAY_OF_YEAR, position);
-        onDateSelected(position, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        onDateSelected(position, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                       calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     public void setSelectedDate(int year, int month, int day) {
-        if (year == startYear && month == startMonth && day < startDay)
+        if (year == startYear && month == startMonth && day < startDay) {
             day = startDay;
+        }
 
         // Get new selected dayOfYear
         calendar.set(year, month, day, 1, 0, 0);
@@ -248,8 +254,33 @@ public class TimelineView extends RecyclerView {
         selectedMonth = startMonth;
         selectedDay = startDay;
         selectedPosition = 0;
-        if (adapter != null)
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void setLastDate(int endYear, int endMonth, int endDay) {
+        Calendar firstDate = Calendar.getInstance();
+        firstDate.set(startYear, startMonth, startDay);
+        Calendar lastDate = Calendar.getInstance();
+        lastDate.set(endYear, endMonth, endDay);
+
+        // TODO: might now work for summer time...
+        int dayDiff = (int) TimeUnit.DAYS.convert(lastDate.getTimeInMillis() - firstDate.getTimeInMillis(),
+                                                  TimeUnit.MILLISECONDS);
+
+        setDayCount(dayDiff + 1);
+    }
+
+    void setDayCount(int dayCount) {
+        if (this.dayCount == dayCount) {
+            return;
+        }
+
+        this.dayCount = dayCount;
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private class TimelineAdapter extends RecyclerView.Adapter<TimelineViewHolder> {
@@ -285,7 +316,7 @@ public class TimelineView extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            return Integer.MAX_VALUE;
+            return dayCount;
         }
     }
 
@@ -328,7 +359,7 @@ public class TimelineView extends RecyclerView {
             lblValue.setText(label);
 
             lblDate.setBackgroundResource(selected ? R.drawable.mti_bg_lbl_date_selected
-                                                  : (isToday ? R.drawable.mti_bg_lbl_date_today : 0));
+                                                   : (isToday ? R.drawable.mti_bg_lbl_date_today : 0));
             lblDate.setTextColor(selected || isToday ? lblDateSelectedColor : lblDateColor);
         }
     }

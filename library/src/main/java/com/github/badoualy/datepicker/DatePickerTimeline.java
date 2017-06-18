@@ -67,25 +67,32 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         int lblLabelColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_label);
 
         // Load xml attrs
-        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DatePickerTimeline, defStyleAttr, 0);
+        final TypedArray a = getContext()
+                .obtainStyledAttributes(attrs, R.styleable.DatePickerTimeline, defStyleAttr, 0);
         primaryColor = a.getColor(R.styleable.DatePickerTimeline_mti_primaryColor, primaryColor);
         primaryDarkColor = a.getColor(R.styleable.DatePickerTimeline_mti_primaryDarkColor, primaryDarkColor);
         tabSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_tabSelectedColor, tabSelectedColor);
-        tabBeforeSelectionColor = a.getColor(R.styleable.DatePickerTimeline_mti_tabBeforeSelectionColor, tabBeforeSelectionColor);
+        tabBeforeSelectionColor = a
+                .getColor(R.styleable.DatePickerTimeline_mti_tabBeforeSelectionColor, tabBeforeSelectionColor);
         lblDayColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblDayColor, lblDayColor);
         lblDateColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblDateColor, lblDateColor);
-        lblDateSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblDateSelectedColor, lblDateSelectedColor);
-        bgLblDateSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_bgLblDateSelectedColor, bgLblDateSelectedColor);
-        ringLblDateSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_ringLblDateSelectedColor, ringLblDateSelectedColor);
+        lblDateSelectedColor = a
+                .getColor(R.styleable.DatePickerTimeline_mti_lblDateSelectedColor, lblDateSelectedColor);
+        bgLblDateSelectedColor = a
+                .getColor(R.styleable.DatePickerTimeline_mti_bgLblDateSelectedColor, bgLblDateSelectedColor);
+        ringLblDateSelectedColor = a
+                .getColor(R.styleable.DatePickerTimeline_mti_ringLblDateSelectedColor, ringLblDateSelectedColor);
         bgLblTodayColor = a.getColor(R.styleable.DatePickerTimeline_mti_bgLblTodayColor, bgLblTodayColor);
         lblLabelColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblLabelColor, lblLabelColor);
         boolean followScroll = a.getBoolean(R.styleable.DatePickerTimeline_mti_followScroll, true);
         a.recycle();
 
-        final LayerDrawable selectedDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.mti_bg_lbl_date_selected);
+        final LayerDrawable selectedDrawable = (LayerDrawable) ContextCompat
+                .getDrawable(getContext(), R.drawable.mti_bg_lbl_date_selected);
         ((GradientDrawable) selectedDrawable.getDrawable(0)).setColor(ringLblDateSelectedColor);
         ((GradientDrawable) selectedDrawable.getDrawable(1)).setColor(bgLblDateSelectedColor);
-        final LayerDrawable todayDrawable = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.mti_bg_lbl_date_today);
+        final LayerDrawable todayDrawable = (LayerDrawable) ContextCompat
+                .getDrawable(getContext(), R.drawable.mti_bg_lbl_date_today);
         ((GradientDrawable) todayDrawable.getDrawable(1)).setColor(bgLblTodayColor);
 
         setOrientation(VERTICAL);
@@ -112,12 +119,14 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
             public void onDateSelected(int year, int month, int day, int index) {
                 monthView.setSelectedMonth(year, month, false, timelineScrollListener == null);
 
-                if (onDateSelectedListener != null)
+                if (onDateSelectedListener != null) {
                     onDateSelectedListener.onDateSelected(year, month, day, index);
+                }
             }
         });
 
-        timelineView.setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        timelineView.setSelectedDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                                     calendar.get(Calendar.DAY_OF_MONTH));
 
         if (followScroll) {
             timelineScrollListener = new TimelineScrollListener(monthView, timelineView);
@@ -171,6 +180,11 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         timelineView.setFirstDate(year, month, day);
     }
 
+    public void setLastVisibleDate(int year, int month, int day) {
+        monthView.setLastDate(year, month);
+        timelineView.setLastDate(year, month, day);
+    }
+
     public void centerOnSelection() {
         monthView.centerOnSelection();
         timelineView.centerOnSelection();
@@ -195,6 +209,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
     }
 
     public interface OnDateSelectedListener {
+
         void onDateSelected(int year, int month, int day, int index);
     }
 }
