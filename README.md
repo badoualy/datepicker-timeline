@@ -17,7 +17,7 @@ repositories {
 
 Then, add the library dependency:
 ```gradle
-compile 'com.github.badoualy:datepicker-timeline:ae065cc44d'
+compile 'com.github.badoualy:datepicker-timeline:c6dcd05737'
 ```
 
 Now go do some awesome stuff!
