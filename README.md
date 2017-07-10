@@ -4,6 +4,8 @@
 
 > ### Designed by the awesome https://dribbble.com/LeslyPyram :)
 
+<img src="https://github.com/badoualy/datepicker-timeline/blob/master/ART/demo.gif" width="300">
+
 Setup
 ----------------
 
@@ -25,6 +27,49 @@ Now go do some awesome stuff!
 Usage
 ----------------
 
+**Warning**: Note that the month value is always between 0 and 11 due to the use of the Calendar API.
+
+### Add the view to your xml
+```xml
+ <com.github.badoualy.datepicker.DatePickerTimeline
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+```
+
+### Setup the first visible date via the code
+```java
+timeline.setFirstVisibleDate(2016, Calendar.JULY, 19);
+```
+
+### You can also set the limit date
+```java
+timeline.setLastVisibleDate(2020, Calendar.JULY, 19);
+```
+
+### Supply a label adapter to add a label below each date if needed
+```java
+timeline.setDateLabelAdapter(new MonthView.DateLabelAdapter() {
+    @Override   
+    public CharSequence getLabel(Calendar calendar, int index) {
+        return Integer.toString(calendar.get(Calendar.MONTH) + 1) + "/" + (calendar.get(Calendar.YEAR) % 2000);
+    }
+});
+```
+
+### Set a listener to be notified when the user select a date
+```java
+timeline.setOnDateSelectedListener(new DatePickerTimeline.OnDateSelectedListener() {
+    @Override
+    public void onDateSelected(int year, int month, int day, int index) {
+                
+    }
+});
+```
+
+### You can the the date manually
+```java
+timeline.setSelectedDate(2017, Calendar.JULY, 19);
+```
 
 Licence
 ----------------
