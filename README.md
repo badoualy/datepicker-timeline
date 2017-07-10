@@ -1,4 +1,4 @@
-[![Release](https://jitpack.io/v/badoualy/datepicker-timeline.svg)](https://jitpack.io/#badoualy/datepicker-timeline)
+[![Release](https://jitpack.io/v/badoualy/datepicker-timeline.svg)](https://jitpack.io/#badoualy/datepicker-timeline) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-DatePicker%20Timeline-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/5965)
 
 <img src="https://github.com/badoualy/datepicker-timeline/blob/master/ART/ic_brand.jpg" width="300">
 
