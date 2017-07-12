@@ -13,8 +13,9 @@ class TimelineScrollListener extends RecyclerView.OnScrollListener {
 
     private Calendar calendar = Calendar.getInstance();
     private int year = -1;
-    private int yearOffsetStart = -1;
-    private int yearOffsetEnd = -1;
+    private int yearStartOffset = 0;
+    private int yearEndOffset = 0;
+    private int monthCount = 12;
 
     private int timelineItemWidth;
 
@@ -31,29 +32,34 @@ class TimelineScrollListener extends RecyclerView.OnScrollListener {
         int scrollOffsetCenter = scrollOffset + (recyclerView.getMeasuredWidth() / 2);
         int centerPosition = scrollOffsetCenter / timelineItemWidth;
 
-        // TODO: handle first year offset starting left
-        if (!(scrollOffsetCenter >= yearOffsetStart && scrollOffsetCenter <= yearOffsetEnd)) {
+        if (!(scrollOffsetCenter >= yearStartOffset && scrollOffsetCenter <= yearEndOffset)) {
             calendar.set(timelineView.getStartYear(), timelineView.getStartMonth(), timelineView.getStartDay());
+            int startDay = calendar.get(Calendar.DAY_OF_YEAR);
             calendar.add(Calendar.DAY_OF_YEAR, centerPosition);
 
             year = calendar.get(Calendar.YEAR);
             int yearDayCount = calendar.getActualMaximum(Calendar.DAY_OF_YEAR);
-            int yearDay = calendar.get(Calendar.DAY_OF_YEAR);
 
-            yearOffsetEnd = yearDayCount * timelineItemWidth;
             if (year != timelineView.getStartYear()) {
-                yearOffsetStart = (scrollOffsetCenter - scrollOffset % timelineItemWidth) / yearDay;
-                yearOffsetEnd += yearOffsetStart;
+                int yearDay = calendar.get(Calendar.DAY_OF_YEAR);
+                yearStartOffset = scrollOffsetCenter
+                        - yearDay * timelineItemWidth
+                        - scrollOffsetCenter % timelineItemWidth;
+                monthCount = 12;
             } else {
-                yearOffsetStart = timelineView.getMeasuredWidth() / 2;
+                yearStartOffset = 0;
+                monthCount = 12 - timelineView.getStartMonth();
+                yearDayCount -= startDay;
             }
-        }
-        Log.v("Yann", "yearOffsetStart: " + yearOffsetStart + ", " + "yearOffsetEnd: " + yearOffsetEnd + ", "
-                + "scrollOffsetCenter: " + scrollOffsetCenter);
 
-        float progress = (float) (scrollOffsetCenter - yearOffsetStart) / (yearOffsetEnd - yearOffsetStart);
-        int yearOffset = (int) ((1 - progress) * monthView.getYearWidth());
-        Log.d("Yann", "progress: " + progress + ", monthOffset: " + yearOffset);
+            yearEndOffset = yearStartOffset + yearDayCount * timelineItemWidth;
+        }
+
+        Log.v("TimeScrollListener", "yearStartOffset: " + yearStartOffset + ", " + "yearEndOffset: " + yearEndOffset + ", "
+                + "scrollOffsetCenter: " + scrollOffsetCenter);
+        float progress = (float) (scrollOffsetCenter - yearStartOffset) / (yearEndOffset - yearStartOffset);
+        int yearOffset = (int) ((1 - progress) * (monthCount * monthView.getItemWidth()));
+        Log.v("TimeScrollListener", "progress: " + progress + ", monthOffset: " + yearOffset);
         monthView.scrollToYearPosition(year, yearOffset);
     }
 }
