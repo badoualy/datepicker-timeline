@@ -9,7 +9,8 @@
     <com.github.badoualy.datepicker.MonthView
         android:id="@+id/mti_month_view"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/mti_month_height"
         tools:background="@color/mti_default_primary"
         tools:listitem="@layout/mti_item_month"/>
 

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Month -->
-    <dimen name="mti_month_width">62dp</dimen>
+    <dimen name="mti_month_width">72dp</dimen>
     <dimen name="mti_month_height">48dp</dimen>
-    <dimen name="mti_month_lbl_padding">8dp</dimen>
-    <dimen name="mti_month_lbl_padding_top">5dp</dimen>
-    <dimen name="mti_month_lbl_text">14dp</dimen>
-    <dimen name="mti_month_lbl_margin_top">8dp</dimen>
+    <dimen name="mti_month_lbl_padding_horizontal">8dp</dimen>
+    <dimen name="mti_month_lbl_padding_vertical">5dp</dimen>
+    <dimen name="mti_month_lbl_text">14sp</dimen>
 
     <!-- Timeline -->
     <dimen name="mti_timeline_width">50dp</dimen>

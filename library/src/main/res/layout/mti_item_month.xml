@@ -3,13 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/mti_month_width"
-    android:layout_height="@dimen/mti_month_height"
-    android:orientation="vertical"
-    android:paddingEnd="@dimen/mti_month_lbl_padding"
-    android:paddingLeft="@dimen/mti_month_lbl_padding"
-    android:paddingRight="@dimen/mti_month_lbl_padding"
-    android:paddingStart="@dimen/mti_month_lbl_padding"
-    android:paddingTop="@dimen/mti_month_lbl_padding_top">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:minHeight="@dimen/mti_month_height"
+    android:paddingBottom="@dimen/mti_month_lbl_padding_vertical"
+    android:paddingEnd="@dimen/mti_month_lbl_padding_horizontal"
+    android:paddingLeft="@dimen/mti_month_lbl_padding_horizontal"
+    android:paddingRight="@dimen/mti_month_lbl_padding_horizontal"
+    android:paddingStart="@dimen/mti_month_lbl_padding_horizontal"
+    android:paddingTop="@dimen/mti_month_lbl_padding_vertical">
 
     <com.github.badoualy.datepicker.DotView
         android:id="@+id/mti_view_indicator"
@@ -20,15 +23,13 @@
     <TextView
         android:id="@+id/mti_month_lbl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/mti_month_lbl_margin_top"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ellipsize="end"
         android:gravity="center"
-        android:maxLength="7"
-        android:maxLines="2"
+        android:maxLength="8"
         android:textColor="@color/mti_default_primary"
         android:textSize="@dimen/mti_month_lbl_text"
-        tools:text="February"/>
+        tools:text="Feb\n17"/>
 
 </FrameLayout>

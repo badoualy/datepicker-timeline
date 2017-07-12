@@ -85,6 +85,8 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         bgLblTodayColor = a.getColor(R.styleable.DatePickerTimeline_mti_bgLblTodayColor, bgLblTodayColor);
         lblLabelColor = a.getColor(R.styleable.DatePickerTimeline_mti_lblLabelColor, lblLabelColor);
         boolean followScroll = a.getBoolean(R.styleable.DatePickerTimeline_mti_followScroll, true);
+        int yearDigitCount = a.getInt(R.styleable.DatePickerTimeline_mti_yearDigitCount, 2);
+        boolean yearOnNewLine = a.getBoolean(R.styleable.DatePickerTimeline_mti_yearOnNewLine, true);
         a.recycle();
 
         final LayerDrawable selectedDrawable = (LayerDrawable) ContextCompat
@@ -106,6 +108,8 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         monthView.setDefaultColor(primaryDarkColor);
         monthView.setColorSelected(tabSelectedColor);
         monthView.setColorBeforeSelection(tabBeforeSelectionColor);
+        monthView.setYearDigitCount(yearDigitCount);
+        monthView.setYearOnNewLine(yearOnNewLine);
         monthView.setOnMonthSelectedListener(this);
 
         timelineView.setBackgroundColor(Color.WHITE);
