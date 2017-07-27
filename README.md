@@ -9,6 +9,8 @@
 Setup
 ----------------
 
+**Minimum api level**: 14
+
 First, add jitpack in your build.gradle at the end of repositories:
  ```gradle
 repositories {
