@@ -23,7 +23,7 @@ allprojects {
 ext {
     compileSdkVersion = 26
     buildToolsVersion = "26.0.0"
-    supportLibVersion = "26.0.0-beta2"
+    supportLibVersion = "26.0.0"
 }
 
 task wrapper(type: Wrapper) {
