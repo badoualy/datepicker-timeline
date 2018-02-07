@@ -3,7 +3,6 @@ package com.github.badoualy.datepicker;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -56,6 +55,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         // Load default values
         int primaryColor = Utils.getPrimaryColor(getContext());
         int primaryDarkColor = Utils.getPrimaryDarkColor(getContext());
+        int bgTimelineColor = ContextCompat.getColor(getContext(), R.color.mti_bg_timeline);
         int tabSelectedColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_selected);
         int tabBeforeSelectionColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_tab_before_selection);
         int lblDayColor = ContextCompat.getColor(getContext(), R.color.mti_lbl_day);
@@ -71,6 +71,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
                 .obtainStyledAttributes(attrs, R.styleable.DatePickerTimeline, defStyleAttr, 0);
         primaryColor = a.getColor(R.styleable.DatePickerTimeline_mti_primaryColor, primaryColor);
         primaryDarkColor = a.getColor(R.styleable.DatePickerTimeline_mti_primaryDarkColor, primaryDarkColor);
+        bgTimelineColor = a.getColor(R.styleable.DatePickerTimeline_mti_bgTimelineColor, bgTimelineColor);
         tabSelectedColor = a.getColor(R.styleable.DatePickerTimeline_mti_tabSelectedColor, tabSelectedColor);
         tabBeforeSelectionColor = a
                 .getColor(R.styleable.DatePickerTimeline_mti_tabBeforeSelectionColor, tabBeforeSelectionColor);
@@ -112,7 +113,7 @@ public final class DatePickerTimeline extends LinearLayout implements MonthView.
         monthView.setYearOnNewLine(yearOnNewLine);
         monthView.setOnMonthSelectedListener(this);
 
-        timelineView.setBackgroundColor(Color.WHITE);
+        timelineView.setBackgroundColor(bgTimelineColor);
         timelineView.setFirstDate(startYear, startMonth, startDay);
         timelineView.setDayLabelColor(lblDayColor);
         timelineView.setDateLabelColor(lblDateColor);

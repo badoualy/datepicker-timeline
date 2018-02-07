@@ -4,6 +4,8 @@
     <color name="mti_default_primary">#01b37c</color>
     <color name="mti_default_primary_dark">#09865f</color>
 
+    <color name="mti_bg_timeline">#FFFFFF</color>
+
     <color name="mti_lbl_tab_selected">#FFFFFF</color>
     <color name="mti_lbl_tab_before_selection">#5affffff</color>
 
