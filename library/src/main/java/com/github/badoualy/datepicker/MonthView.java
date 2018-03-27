@@ -325,12 +325,13 @@ public class MonthView extends RecyclerView {
             this.year = year;
             this.month = month;
 
-            String text = MONTHS[month].substring(0, 3).toUpperCase(Locale.US);
+            String text = MONTHS[month];
+            String truncatedText = text.substring(0, Math.min(text.length(), 3)).toUpperCase(Locale.US);
             if (yearDigitCount > 0) {
-                text += yearOnNewLine ? "\n" : " ";
-                text += year % (int) Math.pow(10, yearDigitCount);
+                truncatedText += yearOnNewLine ? "\n" : " ";
+                truncatedText += year % (int) Math.pow(10, yearDigitCount);
             }
-            lbl.setText(text);
+            lbl.setText(truncatedText);
             int color = selected ? colorSelected : beforeSelection ? colorBeforeSelection : defaultColor;
             lbl.setTextColor(color);
             indicator.setColor(color);
