@@ -4,6 +4,8 @@
         <attr name="mti_primaryColor" format="color"/>
         <attr name="mti_primaryDarkColor" format="color"/>
 
+        <attr name="mti_bgTimelineColor" format="color" />
+
         <attr name="mti_tabSelectedColor" format="color"/>
         <attr name="mti_tabBeforeSelectionColor" format="color"/>
 
