@@ -325,7 +325,8 @@ public class MonthView extends RecyclerView {
             this.year = year;
             this.month = month;
 
-            String text = MONTHS[month].substring(0, 3).toUpperCase(Locale.US);
+            String text = MONTHS[month];
+            text = text.substring(0, Math.min(text.length(), 3)).toUpperCase(Locale.US);
             if (yearDigitCount > 0) {
                 text += yearOnNewLine ? "\n" : " ";
                 text += year % (int) Math.pow(10, yearDigitCount);
